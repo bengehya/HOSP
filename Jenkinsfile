@@ -13,17 +13,14 @@ pipeline {
                 url: 'https://github.com/bengehya/HOSP.git'
             }
         }
-    }
 
-            stage('SonarQube Analysis') {
-    steps {
-        withSonarQubeEnv('SonarScanner') {
-            bat './gradlew sonar'
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarScanner') { // Remplacer par ton vrai nom
+                    bat './gradlew sonar'
+                }
+            }
         }
-    }
-}
-
-        
 
         stage('Manual Approval') {
             steps {
@@ -40,15 +37,5 @@ pipeline {
                 }
             }
         }
-
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv() {
-                    bat './gradlew sonar'
-                }
-            }
-        }
-        
-        // === ENLEVÉ : PLUS de Quality Gate blocant ===
     }
 }
