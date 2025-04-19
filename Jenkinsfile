@@ -13,6 +13,7 @@ pipeline {
                 url: 'https://github.com/bengehya/HOSP.git'
             }
         }
+    }
 
             stage('SonarQube Analysis') {
     steps {
@@ -22,7 +23,7 @@ pipeline {
     }
 }
 
-        }
+        
 
         stage('Manual Approval') {
             steps {
