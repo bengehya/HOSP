@@ -4,6 +4,7 @@ pipeline {
     environment {
         AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+        SONAR_TOKEN           = credentials('sonar-token') // ➔ Ajoute ton Sonar token ici
     }
 
     stages {
@@ -16,8 +17,8 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarScanner') { // Remplacer par ton vrai nom
-                    bat './gradlew sonar'
+                withSonarQubeEnv('SonarScanner') {
+                    bat './gradlew sonar -Dsonar.login=%SONAR_TOKEN%'
                 }
             }
         }
