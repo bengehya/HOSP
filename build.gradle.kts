@@ -1,8 +1,13 @@
 plugins {
-    id("com.android.application") version "8.2.2"
-    id("org.sonarqube") version "4.3.1.3277"
-    kotlin("android") version "1.9.22"
+    id("com.android.application") version "8.2.2" apply false
+    kotlin("android") version "1.9.22" apply false
+    id("org.sonarqube") version "4.3.1.3277" apply true
 }
+
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
+}
+
 
 android {
     namespace = "com.example.hosp"
