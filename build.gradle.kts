@@ -1,8 +1,9 @@
 plugins {
-    id("com.android.application") version "8.2.2"
+    id("com.android.application") version "8.8.0"
     id("org.sonarqube") version "4.4.1.3373"
     kotlin("android") version "1.9.20"
 }
+
 
 android {
     namespace = "com.example.hospital"
