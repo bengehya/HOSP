@@ -14,15 +14,14 @@ pipeline {
             }
         }
 
-        stage('Terraform Init and Plan') {
-            steps {
-                dir('terraform') {
-                    bat '''
-                        terraform init
-                        terraform plan -out=tfplan
-                    '''
-                }
-            }
+            stage('SonarQube Analysis') {
+    steps {
+        withSonarQubeEnv('SonarScanner') {
+            bat './gradlew sonar'
+        }
+    }
+}
+
         }
 
         stage('Manual Approval') {
