@@ -1,21 +1,30 @@
 plugins {
-    id("org.sonarqube") version "4.4.1.3373"
-    kotlin("jvm") version "1.9.22"  // Seulement Kotlin JVM pas Android
+    id("com.android.application") version "8.2.2"
+    id("org.sonarqube") version "4.3.1.3277"
+    kotlin("android") version "1.9.22"
 }
 
-repositories {
-    mavenCentral()
+android {
+    namespace = "com.example.hosp"
+    compileSdk = 34
+
+    defaultConfig {
+        applicationId = "com.example.hosp"
+        minSdk = 24
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
+    }
+
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+        }
+    }
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
-}
-
-sonarqube {
-    properties {
-        property("sonar.projectKey", "HOSP")
-        property("sonar.organization", "your-organization-key")
-        property("sonar.host.url", "http://localhost:9000")
-        property("sonar.login", System.getenv("SONAR_TOKEN"))
-    }
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.9.0")
 }
