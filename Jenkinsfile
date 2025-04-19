@@ -2,33 +2,33 @@ pipeline {
     agent any
 
     environment {
-        AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
-        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+        AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')    // Jenkins Credentials ID pour AWS
+        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY') // Jenkins Credentials ID pour AWS
     }
 
     stages {
         stage('Checkout') {
             steps {
                 git branch: 'master', 
-                url: 'https://github.com/bengehya/HOSP.git'
+                    url: 'https://github.com/bengehya/HOSP.git'
             }
         }
 
-        stage('Terraform Init/Plan') {
+        stage('Terraform Init and Plan') {
             steps {
                 dir('terraform') {
                     bat '''
-                        terraform init -no-color
-                        terraform plan -no-color -out=tfplan
+                        terraform init
+                        terraform plan -out=tfplan
                     '''
                 }
             }
         }
 
-        stage('Approbation Manuel') {
+        stage('Manual Approval') {
             steps {
-                timeout(time: 30, unit: 'MINUTES') {
-                    input message: 'Apply terraform changes ?'
+                timeout(time: 10, unit: 'MINUTES') {
+                    input message: 'Apply Terraform changes?'
                 }
             }
         }
