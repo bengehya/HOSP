@@ -1,38 +1,32 @@
-// build.gradle.kts (à la racine)
-
 plugins {
-    id("com.android.application") version "8.2.2" apply false
-    id("org.sonarqube") version "6.0.1.5171"
+    id("com.android.application") version "8.2.2"
+    id("org.sonarqube") version "4.4.1.3373"
+    kotlin("android") version "1.9.20"
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
+android {
+    namespace = "com.example.hospital"
+    compileSdk = 34
+
+    defaultConfig {
+        applicationId = "com.example.hospital"
+        minSdk = 24
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
     }
-}
 
-subprojects {
-    afterEvaluate {
-        if (plugins.hasPlugin("com.android.application")) {
-            extensions.configure<com.android.build.gradle.BaseExtension> {
-                compileSdkVersion(34)
-
-                defaultConfig {
-                    applicationId = "com.example.hospital"
-                    minSdk = 24
-                    targetSdk = 34
-                    versionCode = 1
-                    versionName = "1.0"
-                }
-            }
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
         }
     }
 }
 
-sonar {
+sonarqube {
     properties {
-        property("sonar.projectKey", "Host")
-        property("sonar.projectName", "Host")
+        property("sonar.projectKey", "hospital")
+        property("sonar.host.url", "http://localhost:9000")
+        property("sonar.sourceEncoding", "UTF-8")
     }
 }
